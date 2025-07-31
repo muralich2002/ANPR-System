@@ -1,3 +1,6 @@
+# Beverage Company - Gen AI Data Modernization Architecture
+
+```mermaid
 %%{init: { "flowchart": { "useMaxWidth": false, "width": 100% }, "theme": "default", "themeVariables": { "fontSize": "20px", "nodeTextMargin": 10, "nodeBorder": 3 } }}%%
 graph LR
     %% Title
@@ -172,8 +175,6 @@ graph LR
     class AIRFLOW,MWAA orchestration
 ```
 
-# Beverage Company - Gen AI Data Modernization Architecture
-
 ## Overview
 This enhanced architecture diagram illustrates the comprehensive Gen AI-powered data modernization journey for a leading beverage manufacturer, focusing on AWS Bedrock and related AI services to create intelligent sales and marketing solutions.
 
@@ -289,4 +290,4 @@ This enhanced architecture diagram illustrates the comprehensive Gen AI-powered 
 - Enhanced customer satisfaction via intelligent recommendations
 - Reduced time-to-insight for business decisions
 - Increased data democratization across the organization
-- Foundation for future AI innovation and competitive advantage 
+- Foundation for future AI innovation and competitive advantage
