@@ -80,13 +80,6 @@ graph LR
     class RAW,CATALOG,BEDROCK lakehouse
     class SAGEMAKER,APPS,ATHENA consumption
     class IAM,KMS,CLOUDTRAIL governance
-
-    %% Style for subgraph labels
-    style "Source Systems" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
-    style "Ingestion & Processing" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
-    style "Data Lakehouse" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
-    style "Consumption & Visualization" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
-    style "Governance & Security" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
 ```
 
 ## Overview
