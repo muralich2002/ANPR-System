@@ -1,4 +1,3 @@
-```mermaid
 %%{init: { "flowchart": { "useMaxWidth": false, "width": 100% }, "theme": "default", "themeVariables": { "fontSize": "20px", "nodeTextMargin": 10, "nodeBorder": 3 } }}%%
 graph LR
     %% Title
@@ -152,7 +151,7 @@ graph LR
     KMS -->|"Encrypt"| EMBEDDINGS
     CLOUDTRAIL -->|"Audit"| BEDROCK
     CLOUDTRAIL -->|"Monitor"| SAGEMAKER
-    GUARDDUTY -->|"Protect"| GENAI
+    GUARDDUTY -->|"Protect"| BEDROCK
     MACIE -->|"Classify"| REFINED
     GLUE_CATALOG -->|"Govern"| CATALOG
 
@@ -171,16 +170,6 @@ graph LR
     class AI_ASSISTANT,PRESCRIPTIVE,SENTIMENT,ATHENA,QUICKSIGHT,APPS,API_GATEWAY consumption
     class IAM,KMS,CLOUDTRAIL,GUARDDUTY,MACIE,GLUE_CATALOG governance
     class AIRFLOW,MWAA orchestration
-
-    %% Style for subgraph labels
-    style "Source Systems" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Ingestion & Processing" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Data Lakehouse" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Gen AI Services" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Consumption & Visualization" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Governance & Security" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Orchestration" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
-    style "Legend" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:20px
 ```
 
 # Beverage Company - Gen AI Data Modernization Architecture
@@ -300,4 +289,4 @@ This enhanced architecture diagram illustrates the comprehensive Gen AI-powered 
 - Enhanced customer satisfaction via intelligent recommendations
 - Reduced time-to-insight for business decisions
 - Increased data democratization across the organization
-- Foundation for future AI innovation and competitive advantage
+- Foundation for future AI innovation and competitive advantage 
