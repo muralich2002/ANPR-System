@@ -1,31 +1,18 @@
 # Beverage Company - Gen AI Data Modernization Architecture
 
 ```mermaid
-%%{init: { "flowchart": { "useMaxWidth": false, "width": 100% }, "theme": "default", "themeVariables": { "fontSize": "20px", "nodeTextMargin": 10, "nodeBorder": 3 } }}%%
+%%{init: { "flowchart": { "useMaxWidth": false, "width": 100% }, "theme": "default", "themeVariables": { "fontSize": "16px", "nodeTextMargin": 8, "nodeBorder": 2 } }}%%
 graph LR
     %% Title
     title["Beverage Company - Gen AI Data Modernization Architecture"]
-    style title fill:none,stroke:none,font-size:24px,text-align:center
+    style title fill:none,stroke:none,font-size:20px,text-align:center
 
-    %% Define styles for better visual appeal with larger text and boxes
-    classDef source fill:#ff6b6b,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-    classDef ingestion fill:#4ecdc4,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-    classDef lakehouse fill:#45b7d1,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-    classDef genai fill:#9b59b6,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-    classDef consumption fill:#96ceb4,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-    classDef governance fill:#ffd166,stroke:#333,stroke-width:3px,stroke-dasharray: 5 5,font-size:18px
-    classDef orchestration fill:#ff9f1c,stroke:#333,stroke-width:3px,color:white,stroke-dasharray: 5 5,font-size:18px
-
-    %% Legend
-    subgraph Legend
-        direction TB
-        L1["Source Systems"]:::source
-        L2["Ingestion & Processing"]:::ingestion
-        L3["Data Lakehouse"]:::lakehouse
-        L4["Gen AI Services"]:::genai
-        L5["Consumption & Visualization"]:::consumption
-        L6["Governance & Security"]:::governance
-    end
+    %% Define styles for clean, elegant boxes
+    classDef source fill:#ff6b6b,stroke:#333,stroke-width:2px,color:white,font-size:14px
+    classDef ingestion fill:#4ecdc4,stroke:#333,stroke-width:2px,color:white,font-size:14px
+    classDef lakehouse fill:#45b7d1,stroke:#333,stroke-width:2px,color:white,font-size:14px
+    classDef consumption fill:#96ceb4,stroke:#333,stroke-width:2px,color:white,font-size:14px
+    classDef governance fill:#ffd166,stroke:#333,stroke-width:2px,font-size:14px
 
     %% Source Systems
     subgraph "Source Systems"
@@ -33,9 +20,6 @@ graph LR
         ERP[("ERP Systems")]
         POS[("POS Systems")]
         IOT[("IoT Devices")]
-        CRM[("CRM Data")]
-        SALES[("Sales Data")]
-        MARKETING[("Marketing Data")]
     end
 
     %% Ingestion & Processing
@@ -44,250 +28,136 @@ graph LR
         GLUE[("AWS Glue")]
         LAMBDA[("AWS Lambda")]
         STEP[("AWS Step Functions")]
-        KINESIS[("Amazon Kinesis")]
-        SQS[("Amazon SQS")]
-        EVENTBRIDGE[("Amazon EventBridge")]
     end
 
     %% Data Lakehouse
     subgraph "Data Lakehouse"
         direction TB
-        RAW[("Raw Data Layer")]
-        CLEANSED[("Cleansed Data Layer")]
-        REFINED[("Refined Data Layer")]
+        RAW[("Raw")]
         CATALOG[("AWS Glue Data Catalog")]
         BEDROCK[("Amazon Bedrock")]
-        VECTOR[("Vector Database")]
-        EMBEDDINGS[("Embeddings Store")]
-    end
-
-    %% Gen AI Services
-    subgraph "Gen AI Services"
-        direction TB
-        BEDROCK_FOUNDATION[("Foundation Models")]
-        BEDROCK_AGENTS[("Bedrock Agents")]
-        BEDROCK_KNOWLEDGE[("Knowledge Bases")]
-        SAGEMAKER[("Amazon SageMaker")]
-        COMPREHEND[("Amazon Comprehend")]
-        TRANSLATE[("Amazon Translate")]
     end
 
     %% Consumption & Visualization
     subgraph "Consumption & Visualization"
         direction TB
-        AI_ASSISTANT[("AI Sales Assistant")]
-        PRESCRIPTIVE[("Prescriptive Sales Recommender")]
-        SENTIMENT[("Sentiment Analysis Tool")]
-        ATHENA[("Amazon Athena")]
-        QUICKSIGHT[("Amazon QuickSight")]
-        APPS[("Internal Applications")]
-        API_GATEWAY[("API Gateway")]
+        SAGEMAKER[("Amazon SageMaker")]
+        APPS[("Internal Apps")]
+        ATHENA[("Athena")]
     end
 
     %% Governance & Security
     subgraph "Governance & Security"
-        direction TB
+        direction LR
         IAM[("AWS IAM")]
         KMS[("AWS KMS")]
         CLOUDTRAIL[("AWS CloudTrail")]
-        GUARDDUTY[("Amazon GuardDuty")]
-        MACIE[("Amazon Macie")]
-        GLUE_CATALOG[("Data Catalog")]
     end
 
-    %% Orchestration
-    subgraph "Orchestration"
-        direction LR
-        AIRFLOW[("Apache Airflow")]
-        MWAA[("Amazon MWAA")]
-    end
-
-    %% Data Flow - Source to Ingestion
+    %% Clean, straight data flow
     ERP -->|"Extract"| GLUE
     POS -->|"Stream"| LAMBDA
     IOT -->|"Process"| STEP
-    CRM -->|"Batch"| KINESIS
-    SALES -->|"Queue"| SQS
-    MARKETING -->|"Event"| EVENTBRIDGE
 
-    %% Data Flow - Ingestion to Lakehouse
     GLUE -->|"ETL"| RAW
-    LAMBDA -->|"Transform"| CLEANSED
-    STEP -->|"Orchestrate"| REFINED
-    KINESIS -->|"Real-time"| RAW
-    SQS -->|"Process"| CLEANSED
-    EVENTBRIDGE -->|"Trigger"| REFINED
+    LAMBDA -->|"Transform"| CATALOG
+    STEP -->|"Orchestrate"| BEDROCK
 
-    %% Data Flow - Lakehouse Processing
-    RAW -->|"Quality Check"| CLEANSED
-    CLEANSED -->|"Model"| REFINED
-    REFINED -->|"Catalog"| CATALOG
-    REFINED -->|"Generate"| EMBEDDINGS
-    EMBEDDINGS -->|"Store"| VECTOR
+    RAW -->|"Query"| SAGEMAKER
+    CATALOG -->|"Catalog"| ATHENA
+    BEDROCK -->|"AI Models"| APPS
 
-    %% Gen AI Integration
-    BEDROCK -->|"Access Models"| BEDROCK_FOUNDATION
-    BEDROCK -->|"Create Agents"| BEDROCK_AGENTS
-    BEDROCK -->|"Build Knowledge"| BEDROCK_KNOWLEDGE
-    VECTOR -->|"Retrieve"| BEDROCK_KNOWLEDGE
-    CATALOG -->|"Query"| BEDROCK_AGENTS
+    ATHENA -->|"Analyze"| SAGEMAKER
 
-    %% AI Services Integration
-    SAGEMAKER -->|"Train Models"| BEDROCK_FOUNDATION
-    COMPREHEND -->|"Analyze Text"| SENTIMENT
-    TRANSLATE -->|"Multi-language"| AI_ASSISTANT
+    %% Governance connections
+    IAM -->|"Secure"| IOT
+    KMS -->|"Encrypt"| BEDROCK
+    CLOUDTRAIL -->|"Audit"| SAGEMAKER
 
-    %% Consumption Flow
-    BEDROCK_AGENTS -->|"Power"| AI_ASSISTANT
-    BEDROCK_KNOWLEDGE -->|"Enable"| PRESCRIPTIVE
-    SAGEMAKER -->|"Deploy"| PRESCRIPTIVE
-    REFINED -->|"Query"| ATHENA
-    ATHENA -->|"Visualize"| QUICKSIGHT
-    ATHENA -->|"Consume"| APPS
-    API_GATEWAY -->|"Expose"| AI_ASSISTANT
-    API_GATEWAY -->|"Expose"| PRESCRIPTIVE
+    %% Apply styles
+    class ERP,POS,IOT source
+    class GLUE,LAMBDA,STEP ingestion
+    class RAW,CATALOG,BEDROCK lakehouse
+    class SAGEMAKER,APPS,ATHENA consumption
+    class IAM,KMS,CLOUDTRAIL governance
 
-    %% Governance Integration
-    IAM -->|"Secure"| BEDROCK
-    IAM -->|"Control Access"| SAGEMAKER
-    KMS -->|"Encrypt"| VECTOR
-    KMS -->|"Encrypt"| EMBEDDINGS
-    CLOUDTRAIL -->|"Audit"| BEDROCK
-    CLOUDTRAIL -->|"Monitor"| SAGEMAKER
-    GUARDDUTY -->|"Protect"| BEDROCK
-    MACIE -->|"Classify"| REFINED
-    GLUE_CATALOG -->|"Govern"| CATALOG
-
-    %% Orchestration Flow
-    AIRFLOW -->|"Schedule"| GLUE
-    AIRFLOW -->|"Trigger"| LAMBDA
-    MWAA -->|"Orchestrate"| STEP
-    AIRFLOW -->|"Monitor"| BEDROCK
-    AIRFLOW -->|"Deploy"| SAGEMAKER
-
-    %% Apply Styles
-    class ERP,POS,IOT,CRM,SALES,MARKETING source
-    class GLUE,LAMBDA,STEP,KINESIS,SQS,EVENTBRIDGE ingestion
-    class RAW,CLEANSED,REFINED,CATALOG,BEDROCK,VECTOR,EMBEDDINGS lakehouse
-    class BEDROCK_FOUNDATION,BEDROCK_AGENTS,BEDROCK_KNOWLEDGE,SAGEMAKER,COMPREHEND,TRANSLATE genai
-    class AI_ASSISTANT,PRESCRIPTIVE,SENTIMENT,ATHENA,QUICKSIGHT,APPS,API_GATEWAY consumption
-    class IAM,KMS,CLOUDTRAIL,GUARDDUTY,MACIE,GLUE_CATALOG governance
-    class AIRFLOW,MWAA orchestration
+    %% Style for subgraph labels
+    style "Source Systems" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
+    style "Ingestion & Processing" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
+    style "Data Lakehouse" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
+    style "Consumption & Visualization" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
+    style "Governance & Security" fill:#f5f5f5,stroke:#333,stroke-width:2px,font-size:16px
 ```
 
 ## Overview
-This enhanced architecture diagram illustrates the comprehensive Gen AI-powered data modernization journey for a leading beverage manufacturer, focusing on AWS Bedrock and related AI services to create intelligent sales and marketing solutions.
+This high-level architecture diagram illustrates the elegant Gen AI-powered data modernization journey for a leading beverage manufacturer, focusing on key AWS services and clean data flow.
 
 ## Key Components
 
 ### Source Systems
 - **ERP Systems**: Enterprise resource planning data
-- **POS Systems**: Point-of-sale transaction data
+- **POS Systems**: Point-of-sale transaction data  
 - **IoT Devices**: Connected device data
-- **CRM Data**: Customer relationship management data
-- **Sales Data**: Historical and real-time sales information
-- **Marketing Data**: Campaign and customer interaction data
 
 ### Ingestion & Processing
 - **AWS Glue**: ETL processing for structured data
 - **AWS Lambda**: Serverless processing for real-time data
 - **AWS Step Functions**: Workflow orchestration
-- **Amazon Kinesis**: Real-time data streaming
-- **Amazon SQS**: Message queuing for asynchronous processing
-- **Amazon EventBridge**: Event-driven processing
 
 ### Data Lakehouse
-- **Raw Data Layer**: Unprocessed source data storage
-- **Cleansed Data Layer**: Quality-checked and standardized data
-- **Refined Data Layer**: Business-modeled data with semantic meaning
+- **Raw**: Unprocessed source data storage
 - **AWS Glue Data Catalog**: Centralized metadata management
 - **Amazon Bedrock**: Foundation model service for AI applications
-- **Vector Database**: Storage for embeddings and semantic search
-- **Embeddings Store**: Vector representations of data for AI processing
-
-### Gen AI Services
-- **Foundation Models**: Pre-trained large language models via Bedrock
-- **Bedrock Agents**: Autonomous AI agents for specific tasks
-- **Knowledge Bases**: RAG (Retrieval-Augmented Generation) systems
-- **Amazon SageMaker**: Machine learning model development and deployment
-- **Amazon Comprehend**: Natural language processing and sentiment analysis
-- **Amazon Translate**: Multi-language support for global operations
 
 ### Consumption & Visualization
-- **AI Sales Assistant**: Intelligent chatbot for sales support
-- **Prescriptive Sales Recommender**: ML-powered sales recommendations
-- **Sentiment Analysis Tool**: Customer sentiment monitoring
-- **Amazon Athena**: Serverless query service
-- **Amazon QuickSight**: Business intelligence and visualization
-- **Internal Applications**: Custom applications consuming AI insights
-- **API Gateway**: Secure API access to AI services
+- **Amazon SageMaker**: Machine learning and AI model deployment
+- **Internal Apps**: Custom applications consuming AI insights
+- **Athena**: Serverless query service for data analysis
 
 ### Governance & Security
 - **AWS IAM**: Identity and access management
 - **AWS KMS**: Encryption key management
 - **AWS CloudTrail**: API call logging and auditing
-- **Amazon GuardDuty**: Threat detection
-- **Amazon Macie**: Data classification and protection
-- **Data Catalog**: Metadata governance
 
-### Orchestration
-- **Apache Airflow**: Workflow orchestration
-- **Amazon MWAA**: Managed Airflow service
+## Data Flow
 
-## Detailed Data Flow
+### 1. Data Ingestion
+- ERP Systems → AWS Glue (Extract)
+- POS Systems → AWS Lambda (Stream)
+- IoT Devices → AWS Step Functions (Process)
 
-### 1. Data Ingestion Pipeline
-- Multiple source systems feed into various AWS processing services
-- Real-time and batch processing paths for different data types
-- Event-driven architecture for responsive data processing
+### 2. Data Processing
+- AWS Glue → Raw (ETL)
+- AWS Lambda → AWS Glue Data Catalog (Transform)
+- AWS Step Functions → Amazon Bedrock (Orchestrate)
 
-### 2. Data Lakehouse Processing
-- Raw data undergoes quality checks and transformation
-- Business logic applied in refined layer
-- Vector embeddings generated for AI processing
-- Centralized catalog for data discovery
+### 3. AI & Analytics
+- Raw → Amazon SageMaker (Query)
+- AWS Glue Data Catalog → Athena (Catalog)
+- Amazon Bedrock → Internal Apps (AI Models)
+- Athena → Amazon SageMaker (Analyze)
 
-### 3. Gen AI Integration
-- Bedrock provides access to foundation models
-- Knowledge bases built from vector embeddings
-- Autonomous agents created for specific business tasks
-- SageMaker models deployed for custom AI solutions
-
-### 4. AI-Powered Applications
-- AI Sales Assistant provides intelligent customer support
-- Prescriptive Sales Recommender offers data-driven recommendations
-- Sentiment analysis monitors customer satisfaction
-- APIs expose AI capabilities to internal applications
-
-### 5. Governance & Security
-- End-to-end security with IAM and KMS
-- Comprehensive auditing with CloudTrail
-- Data protection with Macie and GuardDuty
-- Metadata governance through data catalog
+### 4. Security & Governance
+- AWS IAM secures IoT Devices
+- AWS KMS encrypts Amazon Bedrock
+- AWS CloudTrail audits Amazon SageMaker
 
 ## Key Benefits
 
 ### Business Impact
-- **AI Sales Assistant**: 24/7 intelligent customer support
-- **Prescriptive Sales Recommender**: Data-driven sales optimization
-- **Sentiment Analysis**: Real-time customer satisfaction monitoring
-- **Self-Serve Analytics**: Democratized data access
+- **Simplified Data Flow**: Clean, linear processing pipeline
+- **AI-Powered Insights**: Bedrock foundation models for intelligent applications
+- **Self-Serve Analytics**: Athena provides easy data access
+- **Scalable Architecture**: Cloud-native design for growth
 
 ### Technical Benefits
-- **Scalable Architecture**: Cloud-native design for growth
+- **Elegant Design**: Clean, easy-to-understand architecture
 - **Cost Optimization**: Pay-per-use pricing model
 - **Security**: Enterprise-grade security and compliance
 - **Innovation Ready**: Foundation for future AI initiatives
 
-### Operational Benefits
-- **Single Source of Truth**: Centralized data lakehouse
-- **Automated Processing**: Reduced manual intervention
-- **Real-time Insights**: Immediate access to business intelligence
-- **Global Reach**: Multi-language support for international operations
-
 ## Success Metrics
-- Improved sales team productivity through AI assistance
-- Enhanced customer satisfaction via intelligent recommendations
-- Reduced time-to-insight for business decisions
-- Increased data democratization across the organization
-- Foundation for future AI innovation and competitive advantage
+- Streamlined data processing pipeline
+- Enhanced AI capabilities through Bedrock
+- Improved data accessibility and insights
+- Foundation for competitive advantage through AI
